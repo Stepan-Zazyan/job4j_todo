@@ -9,7 +9,9 @@ import java.util.Optional;
 public interface TaskService {
     Task add(Task task);
 
-    boolean update(Integer id, Task task);
+    boolean update(Task task);
+
+    boolean updateDone(Task task);
 
     boolean delete(Integer id);
 

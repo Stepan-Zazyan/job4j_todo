@@ -42,6 +42,21 @@ public class TaskController {
         }
     }
 
+    @PostMapping("/update")
+    public String update(@ModelAttribute Task task, Model model) {
+        try {
+            var isUpdated = taskService.update(task);
+            if (!isUpdated) {
+                model.addAttribute("message", "Задача с указанным идентификатором не найдена");
+                return "errors/404";
+            }
+            return "redirect:/tasks";
+        } catch (Exception exception) {
+            model.addAttribute("message", exception.getMessage());
+            return "errors/404";
+        }
+    }
+    
     @GetMapping("/{id}")
     public String getById(Model model, @PathVariable int id) {
         var vacancyOptional = taskService.findById(id);
@@ -60,6 +75,22 @@ public class TaskController {
             model.addAttribute("message", "Задача с указанным идентификатором не найдена");
             return "errors/404";
         }
-        return "redirect:/vacancies";
+        return "redirect:/tasks";
+    }
+
+
+    @PostMapping("/done")
+    public String updateDone(@ModelAttribute Task task, Model model) {
+        try {
+            var isUpdated = taskService.updateDone(task);
+            if (!isUpdated) {
+                model.addAttribute("message", "Задача с указанным идентификатором не найдена");
+                return "errors/404";
+            }
+            return "redirect:/tasks";
+        } catch (Exception exception) {
+            model.addAttribute("message", exception.getMessage());
+            return "errors/404";
+        }
     }
 }

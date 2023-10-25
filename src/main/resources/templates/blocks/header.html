@@ -8,6 +8,14 @@
                     <a class="nav-item nav-link active" th:href="@{/tasks}">Задания</a>
                     <a class="nav-item nav-link active" th:href="@{/tasks/create}">Создать задание</a>
                 </div>
+                <div class="d-flex" th:if="${users.login == 'Гость'}">
+                    <a class="nav-link text-secondary me-3" th:href="@{/users/register}">Регистрация</a>
+                    <a class="nav-link text-secondary" th:href="@{/users/login}">Войти</a>
+                </div>
+                <div class="d-flex" th:if="${users.login != 'Гость'}">
+                    <a class="nav-link text-secondary me-3" href="#" th:text="${users.login}"></a>
+                    <a class="nav-link text-secondary" th:href="@{/users/logout}">Выйти</a>
+                </div>
             </div>
         </div>
     </nav>

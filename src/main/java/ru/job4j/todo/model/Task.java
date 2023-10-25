@@ -1,6 +1,7 @@
 package ru.job4j.todo.model;
 
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,5 +30,9 @@ public class Task {
         this.description = description;
         this.created = created;
         this.done = done;
+    }
+
+    public boolean getDone() {
+        return done;
     }
 }
