@@ -40,11 +40,11 @@ public class SimpleTaskStore implements TaskStore {
             session.createQuery(
                             "UPDATE Task SET title = :fTitle , description = :fDescription, created = :fCreated, done = :fDone "
                                     + "WHERE id = :fId")
+                    .setParameter("fId", task.getId())
                     .setParameter("fTitle", task.getTitle())
                     .setParameter("fDescription", task.getDescription())
                     .setParameter("fCreated", task.getCreated())
                     .setParameter("fDone", task.getDone())
-                    .setParameter("fId", task.getId())
                     .executeUpdate();
             session.getTransaction().commit();
             rsl = true;

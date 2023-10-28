@@ -41,6 +41,11 @@ public class TaskController {
         }
     }
 
+    @GetMapping("/update")
+    public String getUpdatePage() {
+        return "tasks/update";
+    }
+
     @PostMapping("/update")
     public String update(@ModelAttribute Task task, Model model) {
         try {
@@ -55,6 +60,16 @@ public class TaskController {
             return "errors/404";
         }
     }
+
+    @GetMapping("/delete/{id}")
+    public String delete(Model model, @PathVariable int id) {
+        boolean isDeleted = taskService.delete(id);
+        if (!isDeleted) {
+            model.addAttribute("message", "Задача с указанным идентификатором не найдена");
+            return "errors/404";
+        }
+        return "redirect:/tasks";
+    }
     
     @GetMapping("/{id}")
     public String getById(Model model, @PathVariable int id) {
@@ -67,15 +82,7 @@ public class TaskController {
         return "tasks/one";
     }
 
-    @GetMapping("/delete/{id}")
-    public String delete(Model model, @PathVariable int id) {
-        boolean isDeleted = taskService.delete(id);
-        if (!isDeleted) {
-            model.addAttribute("message", "Задача с указанным идентификатором не найдена");
-            return "errors/404";
-        }
-        return "redirect:/tasks";
-    }
+
 
     @GetMapping("/done/{id}")
     public String updateDone(@ModelAttribute Task task, Model model) {
