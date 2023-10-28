@@ -10,7 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-    <title>Список задач</title>
+    <title>Список выполненных задач</title>
 </head>
 <body>
 <div class="container-fluid p-0">
@@ -28,31 +28,18 @@
                 </thead>
                 <tbody>
                 <tr th:each="task: ${taskList}">
+                    <div th:if="${task.done}">
                     <td th:text="${task.id}"/>
-                    <td><a th:text="${task.title}" th:href="@{/tasks/{taskId}(taskId=${task.id})}"></a></td>
+                    <td th:text="${task.title}"/>
                     <td th:text="${task.created}"/>
                     <td th:text="${task.done}"/>
+                    </div>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <div class="mb-3 row">
-            <div class="col-6"></div>
-            <div class="col-6">
-                <div class="row">
-                    <div class="col-6"><a class="btn btn-danger w-100" th:href="@{/tasks/create}">Создать задание</a></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <div class="container mt-2">
-        <ul>
-            <li><a th:href="@{/tasks/selectedAll}">Все</a></li>
-            <li><a th:href="@{/tasks/selectedDone}">Выполненные</a></li>
-            <li><a th:href="@{/tasks/selectedNew}">Новые</a></li>
-        </ul>
     </div>
-    <footer th:insert="blocks/footer :: footer"></footer>
+<footer th:insert="blocks/footer :: footer"></footer>
 </div>
 </body>
 </html>

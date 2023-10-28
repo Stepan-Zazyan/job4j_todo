@@ -5,7 +5,6 @@ import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.service.TaskService;
 
@@ -78,8 +77,7 @@ public class TaskController {
         return "redirect:/tasks";
     }
 
-
-    @PostMapping("/done")
+    @GetMapping("/done/{id}")
     public String updateDone(@ModelAttribute Task task, Model model) {
         try {
             var isUpdated = taskService.updateDone(task);
@@ -92,5 +90,23 @@ public class TaskController {
             model.addAttribute("message", exception.getMessage());
             return "errors/404";
         }
+    }
+
+    @GetMapping("/selectedAll")
+    public String selectAllTasks(@ModelAttribute Task task, Model model) {
+        model.addAttribute("taskList", taskService.findAll());
+        return "tasks/selectedAll";
+    }
+
+    @GetMapping("/selectedDone")
+    public String selectDoneTasks(@ModelAttribute Task task, Model model) {
+        model.addAttribute("taskList", taskService.findAll());
+        return "tasks/selectedDone";
+    }
+
+    @GetMapping("/selectedNew")
+    public String selectNewTasks(@ModelAttribute Task task, Model model) {
+        model.addAttribute("taskList", taskService.findAll());
+        return "tasks/selectedNew";
     }
 }

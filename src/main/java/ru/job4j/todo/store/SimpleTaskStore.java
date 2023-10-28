@@ -39,7 +39,7 @@ public class SimpleTaskStore implements TaskStore {
             session.beginTransaction();
             session.createQuery(
                             "UPDATE Task SET title = :fTitle , description = :fDescription, created = :fCreated, done = :fDone "
-                                    + "WHERE id = :fId", Task.class)
+                                    + "WHERE id = :fId")
                     .setParameter("fTitle", task.getTitle())
                     .setParameter("fDescription", task.getDescription())
                     .setParameter("fCreated", task.getCreated())
@@ -61,7 +61,7 @@ public class SimpleTaskStore implements TaskStore {
         try {
             session.beginTransaction();
             session.createQuery(
-                            "UPDATE Task SET done = :fDone WHERE id = :fId", Task.class)
+                            "UPDATE Task SET done = :fDone WHERE id = :fId")
                     .setParameter("fDone", true)
                     .setParameter("fId", task.getId())
                     .executeUpdate();
@@ -79,7 +79,7 @@ public class SimpleTaskStore implements TaskStore {
         boolean rsl = false;
         try {
             session.beginTransaction();
-            session.createQuery("delete Task where id = :fId", Task.class)
+            session.createQuery("delete Task where id = :fId")
                     .setParameter("fId", id)
                     .executeUpdate();
             rsl = true;
