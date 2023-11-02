@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+/*@EqualsAndHashCode(onlyExplicitlyIncluded = true)*/
 @Table(name = "tasks")
 @Data
 @Getter
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
+/*    @EqualsAndHashCode.Include*/
     private int id;
 
     private String title;
@@ -28,9 +28,9 @@ public class Task {
 
     private boolean done;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users users;
+    private Users users;*/
 
     public Task() {
     }

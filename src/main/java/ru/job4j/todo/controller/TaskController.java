@@ -41,7 +41,7 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/update")
+    @GetMapping("/update/{id}")
     public String getUpdatePage() {
         return "tasks/update";
     }
@@ -50,6 +50,20 @@ public class TaskController {
     public String update(@ModelAttribute Task task, Model model) {
         try {
             var isUpdated = taskService.update(task);
+            if (!isUpdated) {
+                model.addAttribute("message", "Задача с указанным идентификатором не найдена");
+                return "errors/404";
+            }
+            return "redirect:/tasks";
+        } catch (Exception exception) {
+            model.addAttribute("message", exception.getMessage());
+            return "errors/404";
+        }
+    }
+    @GetMapping("/done/{id}")
+    public String updateDone(@ModelAttribute Task task, Model model) {
+        try {
+            var isUpdated = taskService.updateDone(task);
             if (!isUpdated) {
                 model.addAttribute("message", "Задача с указанным идентификатором не найдена");
                 return "errors/404";
@@ -70,50 +84,35 @@ public class TaskController {
         }
         return "redirect:/tasks";
     }
-    
+
     @GetMapping("/{id}")
     public String getById(Model model, @PathVariable int id) {
-        var vacancyOptional = taskService.findById(id);
-        if (vacancyOptional.isEmpty()) {
+        var taskOptional = taskService.findById(id);
+        if (taskOptional.isEmpty()) {
             model.addAttribute("message", "Задача с указанным идентификатором не найдена");
             return "errors/404";
         }
-        model.addAttribute("task", vacancyOptional.get());
+        model.addAttribute("task", taskOptional.get());
         return "tasks/one";
     }
 
 
 
-    @GetMapping("/done/{id}")
-    public String updateDone(@ModelAttribute Task task, Model model) {
-        try {
-            var isUpdated = taskService.updateDone(task);
-            if (!isUpdated) {
-                model.addAttribute("message", "Задача с указанным идентификатором не найдена");
-                return "errors/404";
-            }
-            return "redirect:/tasks";
-        } catch (Exception exception) {
-            model.addAttribute("message", exception.getMessage());
-            return "errors/404";
-        }
-    }
-
-    @GetMapping("/selectedAll")
+    @GetMapping("/list")
     public String selectAllTasks(@ModelAttribute Task task, Model model) {
         model.addAttribute("taskList", taskService.findAll());
-        return "tasks/selectedAll";
+        return "tasks/list";
     }
 
-    @GetMapping("/selectedDone")
+    @GetMapping("/listDone")
     public String selectDoneTasks(@ModelAttribute Task task, Model model) {
         model.addAttribute("taskList", taskService.findAll());
-        return "tasks/selectedDone";
+        return "tasks/listDone";
     }
 
-    @GetMapping("/selectedNew")
+    @GetMapping("/listNew")
     public String selectNewTasks(@ModelAttribute Task task, Model model) {
         model.addAttribute("taskList", taskService.findAll());
-        return "tasks/selectedNew";
+        return "tasks/listNew";
     }
 }

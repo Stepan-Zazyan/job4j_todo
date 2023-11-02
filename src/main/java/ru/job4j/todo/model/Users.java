@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+/*@EqualsAndHashCode(onlyExplicitlyIncluded = true)*/
 @Entity
 @Table(name = "users")
 @Getter
@@ -17,7 +17,7 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
+/*    @EqualsAndHashCode.Include*/
     private int id;
 
     private String name;

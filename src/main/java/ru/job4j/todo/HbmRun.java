@@ -1,3 +1,4 @@
+/*
 package ru.job4j.todo;
 
 import org.hibernate.Session;
@@ -48,4 +49,4 @@ public class HbmRun {
         session.close();
         return list;
     }
-}
+}*/

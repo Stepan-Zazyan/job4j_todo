@@ -26,12 +26,11 @@
                     <th scope="col">Выполнено</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr th:each="task: ${taskList}">
                     <div th:if="${!task.done}">
                         <td th:text="${task.id}"/>
-                        <td th:text="${task.title}"/>
+                        <td><a th:text="${task.title}" th:href="@{/tasks/{taskId}(taskId=${task.id})}"></a></td>
                         <td th:text="${task.created}"/>
                         <td th:text="${task.done}"/>
                     </div>
@@ -39,8 +38,25 @@
                 </tbody>
             </table>
         </div>
+        <div class="mb-3 row">
+            <div class="col-6"></div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-6"><a class="btn btn-danger w-100" th:href="@{/tasks/create}">Создать задание</a></div>
+                </div>
+            </div>
+        </div>
     </div>
-<footer th:insert="blocks/footer :: footer"></footer>
+    <div class="container mt-2">
+        <ul>
+            <li><a th:href="@{/tasks/list}">Все</a></li>
+            <li><a th:href="@{/tasks/listDone}">Выполненные</a></li>
+            <li><a th:href="@{/tasks/listNew}">Новые</a></li>
+        </ul>
+    </div>
 </div>
+<footer th:insert="blocks/footer :: footer"></footer>
 </body>
 </html>
+
+
