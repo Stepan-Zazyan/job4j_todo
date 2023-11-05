@@ -15,7 +15,7 @@
 <div class="container-fluid p-0">
     <header th:insert="blocks/header :: header"></header>
     <div class="container">
-        <form class="mt-3" method="post" th:object="${task}"  enctype="multipart/form-data">
+        <form class="mt-3" method="post" th:object="${task}">
             <input type="hidden" name="id" th:field="*{id}">
             <div class="mb-3">
                 <table class="table">
@@ -42,7 +42,7 @@
                 <div class="col-6">
                     <div class="row">
                         <div class="col-4"><a class="btn btn-light w-100" th:href="@{/tasks/done/{id}(id=${task.id})}">Выполнено</a></div>
-                        <div class="col-4"><a class="btn btn-success w-100" th:href="@{/tasks/update/}">Редактировать</a></div>
+                        <div class="col-4"><a class="btn btn-success w-100" th:href="@{/tasks/update/{id}(id=${task.id})}">Редактировать</a></div>
                         <div class="col-4"><a class="btn btn-danger w-100" th:href="@{/tasks/delete/{id}(id=${task.id})}">Удалить</a></div>
                     </div>
                 </div>

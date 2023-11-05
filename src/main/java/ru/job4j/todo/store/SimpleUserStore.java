@@ -29,6 +29,8 @@ public class SimpleUserStore implements UserStore {
             return Optional.of(user);
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return Optional.empty();
     }
@@ -39,12 +41,14 @@ public class SimpleUserStore implements UserStore {
         Users user = new Users();
         try {
             session.beginTransaction();
-            Query<Users> query = session.createQuery("from Users where name = :fEmail and password = :fPassword", Users.class)
+            Query<Users> query = session.createQuery("from Users where login = :fEmail and password = :fPassword", Users.class)
                     .setParameter("fEmail", email)
                     .setParameter("fPassword", password);
             user = query.uniqueResult();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return Optional.ofNullable(user);
     }
@@ -58,6 +62,8 @@ public class SimpleUserStore implements UserStore {
             result = new ArrayList<>(query.list());
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return result;
     }
@@ -74,6 +80,8 @@ public class SimpleUserStore implements UserStore {
             rsl = true;
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return rsl;
     }
@@ -89,6 +97,8 @@ public class SimpleUserStore implements UserStore {
             user = query.uniqueResult();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return Optional.ofNullable(user);
     }

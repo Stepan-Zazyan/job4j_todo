@@ -36,7 +36,7 @@ public class UserController {
             model.addAttribute("message", "Пользователь с такой почтой уже существует");
             return "users/register";
         }
-        return "redirect:/tasks";
+        return "redirect:/users/login";
     }
 
     @GetMapping("/login")
@@ -46,7 +46,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String loginUser(@ModelAttribute Users user, Model model, HttpServletRequest request) {
-        var userOptional = userService.findByEmailAndPassword(user.getName(), user.getPassword());
+        var userOptional = userService.findByEmailAndPassword(user.getLogin(), user.getPassword());
         if (userOptional.isEmpty()) {
             model.addAttribute("error", "Почта или пароль введены неверно");
             return "users/login";

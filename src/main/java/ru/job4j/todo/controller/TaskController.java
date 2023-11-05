@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.service.TaskService;
 
+import java.util.Optional;
+
 @ThreadSafe
 @Controller
 @RequestMapping("/tasks")
@@ -30,6 +32,17 @@ public class TaskController {
         return "tasks/create";
     }
 
+    @GetMapping("/update/{id}")
+    public String getUpdatePage(Model model, @PathVariable int id) {
+        Optional<Task> task = taskService.findById(id);
+        if (task.isEmpty()) {
+            model.addAttribute("message", "Задача с указанным идентификатором не найдена");
+            return "errors/404";
+        }
+        model.addAttribute("task", task.get());
+        return "tasks/update";
+    }
+
     @PostMapping("/create")
     public String create(@ModelAttribute Task task, Model model) {
         try {
@@ -41,7 +54,7 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/update/{id}")
+    @GetMapping("/update")
     public String getUpdatePage() {
         return "tasks/update";
     }

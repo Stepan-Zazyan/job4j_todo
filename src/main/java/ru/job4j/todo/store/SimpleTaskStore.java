@@ -27,6 +27,8 @@ public class SimpleTaskStore implements TaskStore {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return task;
     }
@@ -50,6 +52,8 @@ public class SimpleTaskStore implements TaskStore {
             rsl = true;
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return rsl;
     }
@@ -69,6 +73,8 @@ public class SimpleTaskStore implements TaskStore {
             rsl = true;
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return rsl;
     }
@@ -85,6 +91,8 @@ public class SimpleTaskStore implements TaskStore {
             rsl = true;
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return rsl;
     }
@@ -98,6 +106,8 @@ public class SimpleTaskStore implements TaskStore {
             result = new ArrayList<>(query.list());
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return result;
     }
@@ -113,6 +123,8 @@ public class SimpleTaskStore implements TaskStore {
             task = query.uniqueResult();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return Optional.ofNullable(task);
     }
