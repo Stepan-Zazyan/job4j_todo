@@ -8,16 +8,16 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Data
-/*@EqualsAndHashCode(onlyExplicitlyIncluded = true)*/
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-/*    @EqualsAndHashCode.Include*/
+    @EqualsAndHashCode.Include
     private int id;
 
     private String name;
@@ -26,10 +26,10 @@ public class Users {
 
     private String password;
 
-    public Users() {
+    public User() {
     }
 
-    public Users(int id, String name, String login, String password) {
+    public User(int id, String name, String login, String password) {
         this.id = id;
         this.name = name;
         this.login = login;

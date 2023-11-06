@@ -1,10 +1,14 @@
 package ru.job4j.todo.service;
 
 import org.springframework.stereotype.Service;
+import ru.job4j.todo.dto.TaskDto;
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.model.User;
 import ru.job4j.todo.store.SimpleTaskStore;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,8 +17,11 @@ public class SimpleTaskService implements TaskService {
 
     private final SimpleTaskStore taskStore;
 
-    public SimpleTaskService(SimpleTaskStore taskStore) {
+    private final SimpleUserService userService;
+
+    public SimpleTaskService(SimpleTaskStore taskStore, SimpleUserService userService) {
         this.taskStore = taskStore;
+        this.userService = userService;
     }
 
     @Override
@@ -38,8 +45,15 @@ public class SimpleTaskService implements TaskService {
     }
 
     @Override
-    public List<Task> findAll() {
-        return taskStore.findAll();
+    public List<TaskDto> findAll() {
+        Collection<Task> taskCollection = taskStore.findAll();
+        List<TaskDto> taskDtoList = new ArrayList<>();
+        for (Task task: taskCollection) {
+            User user = userService.findById(task.getId()).get();
+            taskDtoList.add(new TaskDto(task.getId(), task.getTitle(),
+                    task.getDescription(), task.getCreated(), task.getDone(), user.getName()));
+        }
+        return taskDtoList;
     }
 
     @Override

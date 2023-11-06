@@ -1,23 +1,23 @@
-package ru.job4j.todo.model;
+package ru.job4j.todo.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-@Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Table(name = "tasks")
 @Data
 @Getter
 @Setter
-public class Task {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class TaskDto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private int id;
 
     private String title;
@@ -28,23 +28,18 @@ public class Task {
 
     private boolean done;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String userName;
 
-    public Task() {
+    public TaskDto() {
     }
 
-    public Task(int id, String title, String description, LocalDateTime created, boolean done) {
+    public TaskDto(int id, String title, String description, LocalDateTime created, boolean done, String userName) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.created = created;
         this.done = done;
-    }
-
-    public boolean getDone() {
-        return done;
+        this.userName = userName;
     }
 
 }

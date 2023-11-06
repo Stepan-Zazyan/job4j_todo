@@ -1,5 +1,6 @@
 package ru.job4j.todo.service;
 
+import ru.job4j.todo.dto.TaskDto;
 import ru.job4j.todo.model.Task;
 
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ public interface TaskService {
 
     boolean delete(Integer id);
 
-    List<Task> findAll();
+    List<TaskDto> findAll();
 
     Optional<Task> findById(Integer id);
 

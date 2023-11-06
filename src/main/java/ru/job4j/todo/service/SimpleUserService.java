@@ -1,7 +1,7 @@
 package ru.job4j.todo.service;
 
 import org.springframework.stereotype.Service;
-import ru.job4j.todo.model.Users;
+import ru.job4j.todo.model.User;
 import ru.job4j.todo.store.SimpleUserStore;
 
 import java.util.Collection;
@@ -18,17 +18,17 @@ public class SimpleUserService implements UserService {
 
 
     @Override
-    public Optional<Users> save(Users user) {
+    public Optional<User> save(User user) {
         return userStore.save(user);
     }
 
     @Override
-    public Optional<Users> findByEmailAndPassword(String email, String password) {
+    public Optional<User> findByEmailAndPassword(String email, String password) {
         return userStore.findByEmailAndPassword(email, password);
     }
 
     @Override
-    public Collection<Users> findAll() {
+    public Collection<User> findAll() {
         return userStore.findAll();
     }
 
@@ -38,7 +38,7 @@ public class SimpleUserService implements UserService {
     }
 
     @Override
-    public Optional<Users> findById(int id) {
+    public Optional<User> findById(int id) {
         return userStore.findById(id);
     }
 }

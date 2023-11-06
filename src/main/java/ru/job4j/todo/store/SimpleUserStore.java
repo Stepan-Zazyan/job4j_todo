@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.model.Task;
-import ru.job4j.todo.model.Users;
+import ru.job4j.todo.model.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +20,7 @@ public class SimpleUserStore implements UserStore {
     private final SessionFactory sf;
 
     @Override
-    public Optional<Users> save(Users user) {
+    public Optional<User> save(User user) {
         Session session = sf.openSession();
         try {
             session.beginTransaction();
@@ -36,12 +36,12 @@ public class SimpleUserStore implements UserStore {
     }
 
     @Override
-    public Optional<Users> findByEmailAndPassword(String email, String password) {
+    public Optional<User> findByEmailAndPassword(String email, String password) {
         Session session = sf.openSession();
-        Users user = new Users();
+        User user = new User();
         try {
             session.beginTransaction();
-            Query<Users> query = session.createQuery("from Users where login = :fEmail and password = :fPassword", Users.class)
+            Query<User> query = session.createQuery("from User where login = :fEmail and password = :fPassword", User.class)
                     .setParameter("fEmail", email)
                     .setParameter("fPassword", password);
             user = query.uniqueResult();
@@ -54,11 +54,11 @@ public class SimpleUserStore implements UserStore {
     }
 
     @Override
-    public Collection<Users> findAll() {
+    public Collection<User> findAll() {
         Session session = sf.openSession();
-        List<Users> result = new ArrayList<>();
+        List<User> result = new ArrayList<>();
         try {
-            Query<Users> query = session.createQuery("from Users", Users.class);
+            Query<User> query = session.createQuery("from User", User.class);
             result = new ArrayList<>(query.list());
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -74,7 +74,7 @@ public class SimpleUserStore implements UserStore {
         boolean rsl = false;
         try {
             session.beginTransaction();
-            session.createQuery("delete Users where id = :fId", Users.class)
+            session.createQuery("delete User where id = :fId", User.class)
                     .setParameter("fId", id)
                     .executeUpdate();
             rsl = true;
@@ -87,12 +87,12 @@ public class SimpleUserStore implements UserStore {
     }
 
     @Override
-    public Optional<Users> findById(int id) {
+    public Optional<User> findById(int id) {
         Session session = sf.openSession();
-        Users user = new Users();
+        User user = new User();
         try {
-            Query<Users> query = session
-                    .createQuery("from Users where id = :fId", Users.class);
+            Query<User> query = session
+                    .createQuery("from User where id = :fId", User.class);
             query.setParameter("fId", id);
             user = query.uniqueResult();
         } catch (Exception e) {
