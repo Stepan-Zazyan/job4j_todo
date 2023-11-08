@@ -47,6 +47,7 @@ public class TaskController {
     public String create(@ModelAttribute Task task, Model model) {
         try {
             taskService.add(task);
+
             return "redirect:/tasks";
         } catch (Exception exception) {
             model.addAttribute("message", exception.getMessage());

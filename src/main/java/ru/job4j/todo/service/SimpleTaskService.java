@@ -2,6 +2,7 @@ package ru.job4j.todo.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.todo.dto.TaskDto;
+import ru.job4j.todo.model.Priority;
 import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.store.SimpleTaskStore;
@@ -19,9 +20,14 @@ public class SimpleTaskService implements TaskService {
 
     private final SimpleUserService userService;
 
-    public SimpleTaskService(SimpleTaskStore taskStore, SimpleUserService userService) {
+    private final SimplePriorityService priorityService;
+
+    public SimpleTaskService(SimpleTaskStore taskStore,
+                             SimpleUserService userService,
+                             SimplePriorityService priorityService) {
         this.taskStore = taskStore;
         this.userService = userService;
+        this.priorityService = priorityService;
     }
 
     @Override
@@ -50,8 +56,9 @@ public class SimpleTaskService implements TaskService {
         List<TaskDto> taskDtoList = new ArrayList<>();
         for (Task task: taskCollection) {
             User user = userService.findById(task.getId()).get();
-            taskDtoList.add(new TaskDto(task.getId(), task.getTitle(),
-                    task.getDescription(), task.getCreated(), task.getDone(), user.getName()));
+            Priority priority = priorityService.findById(task.getPriority().getPosition()).get();
+            taskDtoList.add(new TaskDto(task.getId(), task.getTitle(), task.getDescription(),
+                    task.getCreated(), task.getDone(), user.getName(), priority.getName()));
         }
         return taskDtoList;
     }

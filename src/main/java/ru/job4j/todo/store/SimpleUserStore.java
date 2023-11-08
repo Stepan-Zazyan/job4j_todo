@@ -5,9 +5,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-import ru.job4j.todo.model.Task;
 import ru.job4j.todo.model.User;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -101,5 +101,10 @@ public class SimpleUserStore implements UserStore {
             session.close();
         }
         return Optional.ofNullable(user);
+    }
+
+    @Override
+    public void close() throws SQLException {
+        sf.close();
     }
 }

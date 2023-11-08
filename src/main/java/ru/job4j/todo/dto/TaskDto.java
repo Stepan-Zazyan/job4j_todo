@@ -30,16 +30,20 @@ public class TaskDto {
 
     private String userName;
 
+    private String priority;
+
     public TaskDto() {
     }
 
-    public TaskDto(int id, String title, String description, LocalDateTime created, boolean done, String userName) {
+    public TaskDto(int id, String title, String description, LocalDateTime created,
+                   boolean done, String userName, String priority) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.created = created;
         this.done = done;
         this.userName = userName;
+        this.priority = priority;
     }
 
 }

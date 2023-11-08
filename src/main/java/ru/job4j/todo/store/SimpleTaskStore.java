@@ -40,8 +40,8 @@ public class SimpleTaskStore implements TaskStore {
         try {
             session.beginTransaction();
             session.createQuery(
-                            "UPDATE Task SET title = :fTitle , description = :fDescription, created = :fCreated, done = :fDone "
-                                    + "WHERE id = :fId")
+                            "UPDATE Task SET title = :fTitle , description = :fDescription, "
+                                    + "created = :fCreated, done = :fDone WHERE id = :fId")
                     .setParameter("fId", task.getId())
                     .setParameter("fTitle", task.getTitle())
                     .setParameter("fDescription", task.getDescription())
@@ -102,7 +102,7 @@ public class SimpleTaskStore implements TaskStore {
         Session session = sf.openSession();
         List<Task> result = new ArrayList<>();
         try {
-            Query<Task> query = session.createQuery("from Task", Task.class);
+            Query<Task> query = session.createQuery("from Task f JOIN FETCH f.priority", Task.class);
             result = new ArrayList<>(query.list());
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -118,7 +118,7 @@ public class SimpleTaskStore implements TaskStore {
         Task task = new Task();
         try {
             Query<Task> query = session
-                    .createQuery("from Task where id = :fId", Task.class);
+                    .createQuery("from Task where id = :fId ", Task.class);
             query.setParameter("fId", id);
             task = query.uniqueResult();
         } catch (Exception e) {

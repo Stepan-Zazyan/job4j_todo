@@ -14,8 +14,6 @@ public interface TaskStore {
 
     boolean updateDone(Task task);
 
-
-
     boolean delete(Integer id);
 
     List<Task> findAll();
