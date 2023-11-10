@@ -5,7 +5,9 @@ import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.todo.model.Priority;
 import ru.job4j.todo.model.Task;
+import ru.job4j.todo.service.PriorityService;
 import ru.job4j.todo.service.TaskService;
 
 import java.util.Optional;
@@ -16,9 +18,11 @@ import java.util.Optional;
 public class TaskController {
 
     private final TaskService taskService;
+    private final PriorityService priorityService;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskService taskService, PriorityService priorityService) {
         this.taskService = taskService;
+        this.priorityService = priorityService;
     }
 
     @GetMapping
@@ -28,8 +32,20 @@ public class TaskController {
     }
 
     @GetMapping("/create")
-    public String getCreationPage() {
+    public String getCreationPage(Model model) {
+        model.addAttribute("priorities", priorityService.findAll());
         return "tasks/create";
+    }
+
+    @PostMapping("/create")
+    public String create(@ModelAttribute Task task, Model model) {
+        try {
+            taskService.add(task);
+            return "redirect:/tasks";
+        } catch (Exception exception) {
+            model.addAttribute("message", exception.getMessage());
+            return "errors/404";
+        }
     }
 
     @GetMapping("/update/{id}")
@@ -43,17 +59,7 @@ public class TaskController {
         return "tasks/update";
     }
 
-    @PostMapping("/create")
-    public String create(@ModelAttribute Task task, Model model) {
-        try {
-            taskService.add(task);
 
-            return "redirect:/tasks";
-        } catch (Exception exception) {
-            model.addAttribute("message", exception.getMessage());
-            return "errors/404";
-        }
-    }
 
     @GetMapping("/update")
     public String getUpdatePage() {

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.Priority;
 import ru.job4j.todo.store.SimplePriorityStore;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,5 +19,10 @@ public class SimplePriorityService implements PriorityService {
     @Override
     public Optional<Priority> findById(Integer id) {
         return priorityStore.findById(id);
+    }
+
+    @Override
+    public List<Priority> findAll() {
+        return priorityStore.findAll();
     }
 }
