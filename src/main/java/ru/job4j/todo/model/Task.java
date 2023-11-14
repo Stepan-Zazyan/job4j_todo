@@ -7,6 +7,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -35,6 +37,14 @@ public class Task {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "priority_id")
     private Priority priority;
+
+    @ManyToMany
+    @JoinTable(
+            name = "categories_and_tasks",
+            joinColumns = { @JoinColumn(name = "tasks_id") },
+            inverseJoinColumns = { @JoinColumn(name = "categories_id") }
+    )
+    private List<Category> categoryList = new ArrayList<>();
 
     public Task() {
     }

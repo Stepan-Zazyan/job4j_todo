@@ -22,15 +22,15 @@
 
 5. Взаимодействие с приложением:
 Регистрация
-![img.png](img.png)
+![img.png](source/img.png)
 Вход
-![img_1.png](img_1.png)
+![img_1.png](source/img_1.png)
 Список заданий
-![img_2.png](img_2.png)
+![img_2.png](source/img_2.png)
 Создать задание
-![img_3.png](img_3.png)
+![img_3.png](source/img_3.png)
 Обработка задания
-![img_4.png](img_4.png)
+![img_4.png](source/img_4.png)
 
 6. Контакты:
 stepanzazyan@yandex.ru - почта
