@@ -26,6 +26,9 @@ public class User {
 
     private String password;
 
+    private String timezone;
+
+
     public User() {
     }
 

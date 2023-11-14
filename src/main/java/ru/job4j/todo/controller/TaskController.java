@@ -1,6 +1,5 @@
 package ru.job4j.todo.controller;
 
-
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,25 +18,22 @@ public class TaskController {
 
     private final TaskService taskService;
     private final PriorityService priorityService;
-    private final CategoryService categoryService;
 
-    public TaskController(TaskService taskService, PriorityService priorityService, CategoryService categoryService) {
+    public TaskController(TaskService taskService, PriorityService priorityService) {
         this.taskService = taskService;
         this.priorityService = priorityService;
-        this.categoryService = categoryService;
     }
 
     @GetMapping
     public String getAll(Model model) {
         model.addAttribute("taskList", taskService.findAll());
-
         return "tasks/list";
     }
 
     @GetMapping("/create")
     public String getCreationPage(Model model) {
         model.addAttribute("priorities", priorityService.findAll());
-        model.addAttribute("categoryList", categoryService.findAll());
+/*        model.addAttribute("categoryList", categoryService.findAll());*/
         return "tasks/create";
     }
 

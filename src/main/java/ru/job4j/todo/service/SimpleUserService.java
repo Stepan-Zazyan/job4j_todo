@@ -4,8 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.store.SimpleUserStore;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class SimpleUserService implements UserService {
@@ -15,7 +14,6 @@ public class SimpleUserService implements UserService {
     public SimpleUserService(SimpleUserStore userStore) {
         this.userStore = userStore;
     }
-
 
     @Override
     public Optional<User> save(User user) {
