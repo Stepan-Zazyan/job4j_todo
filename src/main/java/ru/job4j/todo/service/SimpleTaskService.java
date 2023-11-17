@@ -8,6 +8,8 @@ import ru.job4j.todo.model.User;
 import ru.job4j.todo.store.SimpleTaskStore;
 
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -55,10 +57,12 @@ public class SimpleTaskService implements TaskService {
         Collection<Task> taskCollection = taskStore.findAll();
         List<TaskDto> taskDtoList = new ArrayList<>();
         for (Task task: taskCollection) {
-            User user = userService.findById(task.getId()).get();
+            User user = userService.findById(/*task.getId()*/50).get();
+            LocalDateTime userTaskCreated = task.getCreated().atZone(
+                    ZoneId.of("Pacific/Johnston")).toLocalDateTime();
             Priority priority = priorityService.findById(task.getPriority().getPosition()).get();
             taskDtoList.add(new TaskDto(task.getId(), task.getTitle(), task.getDescription(),
-                    task.getCreated(), task.getDone(), user.getName(), priority.getName()));
+                    userTaskCreated, task.getDone(), user.getName(), priority.getName()));
         }
         return taskDtoList;
     }

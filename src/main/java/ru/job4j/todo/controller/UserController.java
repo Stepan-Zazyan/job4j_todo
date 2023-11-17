@@ -28,9 +28,9 @@ public class UserController {
 
     @GetMapping("/register")
     public String getRegistrationPage(Model model) {
-        var zones = new ArrayList<TimeZone>();
+        var zones = new ArrayList<String>();
         for (String timeId : TimeZone.getAvailableIDs()) {
-            zones.add(TimeZone.getTimeZone(timeId));
+            zones.add(TimeZone.getTimeZone(timeId).getDisplayName());
         }
         model.addAttribute("timezones", zones);
         return "users/register";
