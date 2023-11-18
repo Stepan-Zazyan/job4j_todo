@@ -13,12 +13,16 @@ import ru.job4j.todo.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 
 @ThreadSafe
 @Controller
 @RequestMapping("/users")
 public class UserController {
+
+    private static User userLoggedIn;
 
     private final UserService userService;
 
@@ -60,6 +64,10 @@ public class UserController {
         }
         var session = request.getSession();
         session.setAttribute("users", userOptional.get());
+        /* Optional<User> userq = (Optional<User>) session.getAttribute("users");*/
+
+        userLoggedIn = (User) session.getAttribute("users");
+
         return "redirect:/tasks";
     }
 
@@ -67,6 +75,10 @@ public class UserController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/users/login";
+    }
+
+    public static User getLoggedInUser() {
+        return userLoggedIn;
     }
 
 }

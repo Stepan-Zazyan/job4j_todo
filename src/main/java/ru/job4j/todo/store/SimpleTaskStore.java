@@ -5,8 +5,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import ru.job4j.todo.filter.SessionFilter;
 import ru.job4j.todo.model.Task;
 
+
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +39,7 @@ public class SimpleTaskStore implements TaskStore {
     @Override
     public boolean update(Task task) {
         Session session = sf.openSession();
+
         boolean rsl = false;
         try {
             session.beginTransaction();
