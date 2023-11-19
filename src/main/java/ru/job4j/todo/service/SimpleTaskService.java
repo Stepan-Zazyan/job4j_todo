@@ -18,15 +18,11 @@ public class SimpleTaskService implements TaskService {
 
     private final SimpleTaskStore taskStore;
 
-    private final SimpleUserService userService;
-
     private final SimplePriorityService priorityService;
 
     public SimpleTaskService(SimpleTaskStore taskStore,
-                             SimpleUserService userService,
                              SimplePriorityService priorityService) {
         this.taskStore = taskStore;
-        this.userService = userService;
         this.priorityService = priorityService;
     }
 
