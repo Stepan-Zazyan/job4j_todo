@@ -1,4 +1,4 @@
 INSERT INTO categories_and_tasks (tasks_id, categories_id)
-VALUES (4, 2);
+VALUES (24, 2);
 INSERT INTO categories_and_tasks (tasks_id, categories_id)
-VALUES (15, 1);
+VALUES (17, 1);
