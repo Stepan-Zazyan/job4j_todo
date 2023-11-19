@@ -1,5 +1,6 @@
 package ru.job4j.todo.controller;
 
+import lombok.Getter;
 import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +14,6 @@ import ru.job4j.todo.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import java.util.TimeZone;
 
 @ThreadSafe
@@ -22,7 +21,8 @@ import java.util.TimeZone;
 @RequestMapping("/users")
 public class UserController {
 
-    private static User userLoggedIn;
+    @Getter
+    private static User loggedInUser;
 
     private final UserService userService;
 
@@ -64,7 +64,7 @@ public class UserController {
         }
         var session = request.getSession();
         session.setAttribute("users", userOptional.get());
-        userLoggedIn = userOptional.get();
+        loggedInUser = userOptional.get();
         return "redirect:/tasks";
     }
 
@@ -72,10 +72,6 @@ public class UserController {
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/users/login";
-    }
-
-    public static User getLoggedInUser() {
-        return userLoggedIn;
     }
 
 }
