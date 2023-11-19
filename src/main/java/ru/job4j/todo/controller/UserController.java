@@ -34,7 +34,7 @@ public class UserController {
     public String getRegistrationPage(Model model) {
         var zones = new ArrayList<String>();
         for (String timeId : TimeZone.getAvailableIDs()) {
-            zones.add(TimeZone.getTimeZone(timeId).getDisplayName());
+            zones.add(TimeZone.getTimeZone(timeId).getID());
         }
         model.addAttribute("timezones", zones);
         return "users/register";
@@ -64,10 +64,7 @@ public class UserController {
         }
         var session = request.getSession();
         session.setAttribute("users", userOptional.get());
-        /* Optional<User> userq = (Optional<User>) session.getAttribute("users");*/
-
-        userLoggedIn = (User) session.getAttribute("users");
-
+        userLoggedIn = userOptional.get();
         return "redirect:/tasks";
     }
 

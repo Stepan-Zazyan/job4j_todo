@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 @Getter
@@ -24,7 +25,7 @@ public class TaskDto {
 
     private String description;
 
-    private LocalDateTime created = LocalDateTime.now();
+    String created = LocalDateTime.now().format(DateTimeFormatter.ofPattern("HH:mm yyyy-MM-dd"));
 
     private boolean done;
 
@@ -35,7 +36,7 @@ public class TaskDto {
     public TaskDto() {
     }
 
-    public TaskDto(int id, String title, String description, LocalDateTime created,
+    public TaskDto(int id, String title, String description, String created,
                    boolean done, String userName, String priority) {
         this.id = id;
         this.title = title;
